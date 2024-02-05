@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <form>
+        <div class="row">
+            <h2 class="text-center">Campaign XYZ</h2>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="first-name">First Name:</label>
+                    <input type="text" class="form-control" id="first-name">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="last-name">Last Name:</label>
+                    <input type="text" class="form-control" id="last-name">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" class="form-control" id="city">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="state">State:</label>
+                    <input type="text" class="form-control" id="state">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="zip">Zip:</label>
+                    <input type="text" class="form-control" id="zip">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="company-name">Company Name:</label>
+                    <input type="text" class="form-control" id="company-name">
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row">    
+        <div class="col-md-12">
+            <h2>Intro</h2>
+            <p>
+                Agent: Hello and thank you for calling Nobel! My name is Kennerson, and I'm here to assist you today.
+                May I have the pleasure of knowing whom I'm speaking with?
+            </p>
+            <p>
+                Customer: Hi, I'm Lionel Messi.
+            </p>
+            <p>
+                Agent: Thank you, Lionel Messi! How can I assist you today? Is there something specific you're looking for
+                or need help with?
+            </p>
+            <p>
+                Customer: I have a question about Inbound Voice
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Data Table</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Types</th>
+                        <th>Topics</th>
+                    </tr>
+                </thead>
+                <tbody id="data-table-body">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('input[type=text]').on('input', function() {
+        localStorage.setItem($(this).attr('id'), $(this).val());
+    });
+
+    $('input[type=text]').each(function() {
+        $(this).val(localStorage.getItem($(this).attr('id')));
+    });
+
+    fetch('https://api.sampleapis.com/codingresources/codingResources')
+    .then(response => response.json())
+    .then(data => {
+        const tableBody = document.getElementById('data-table-body');
+        data.forEach(item => {
+            const row = `<tr><td><a href='${item.url}' target='_blank'>${item.description}</a></td><td>${item.types}</td><td>${item.topics}</td></tr>`;
+            tableBody.innerHTML += row;
+        });
+    });
+</script>
+
+</body>
+</html>
